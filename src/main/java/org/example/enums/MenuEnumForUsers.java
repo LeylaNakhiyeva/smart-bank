@@ -1,10 +1,8 @@
 package org.example.enums;
 
 import lombok.Getter;
-import org.example.strategy.userStrategy.LoginStrategy;
+import org.example.strategy.userStrategy.*;
 import org.example.strategy.MenuStrategy;
-import org.example.strategy.userStrategy.RegistrationStrategy;
-import org.example.strategy.userStrategy.ResetPasswordStrategy;
 
 import java.util.Arrays;
 
@@ -12,11 +10,11 @@ import java.util.Arrays;
 public enum MenuEnumForUsers {
     REGISTRATION(1, "Registration", new RegistrationStrategy()),
     LOGIN(2, "Login", new LoginStrategy()),
-    PASSWORD_RESET(3, "Reset password", new ResetPasswordStrategy());
-//    CREATE_ACCOUNT,
-//    DEPOSIT_MONEY,
-//    WITHDRAW_MONEY,
-//    TRANSFER_MONEY,
+    PASSWORD_RESET(3, "Reset password", new ResetPasswordStrategy()),
+    CREATE_ACCOUNT(4, "Create account", new CreateAccountStrategy()),
+    DEPOSIT_MONEY(5, "Deposit money", new DepositStrategy()),
+    WITHDRAW_MONEY(6, "Withdraw money", new WithdrawMoneyStrategy()),
+    TRANSFER_MONEY(7, "Transfer money", new TransferMoneyStrategy());
 //    VIEW_TRANSACTION_HISTORY,
 //    LOGOUT;
 

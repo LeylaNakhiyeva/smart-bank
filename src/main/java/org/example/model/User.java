@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.example.enums.StatusEnum;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class User {
@@ -12,6 +14,7 @@ public class User {
     private String email;
     private String password;
     private StatusEnum status;
+    private List<Card> cards;
 
     public User(String name, String surname, String email, String password, StatusEnum status){
         this.name= name;
