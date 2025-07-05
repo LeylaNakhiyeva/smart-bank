@@ -1,6 +1,5 @@
 package org.example;
 
-
 import org.example.enums.AdminUserMenuEnum;
 import org.example.enums.MenuEnumForAdmin;
 import org.example.enums.MenuEnumForUsers;
@@ -22,35 +21,36 @@ public class Main {
         int choice;
 
         if (menu.equals(AdminUserMenuEnum.USER)) {
+            while (true){
+                UsersMenuUtil.showMenuForUsers();
+                System.out.print("Select one: ");
+                choice = sc.nextInt();
+                MenuEnumForUsers menuEnumForUsers = MenuEnumForUsers.getEnumByValue(choice);
 
-
-            UsersMenuUtil.showMenuForUsers();
-            System.out.print("Select one: ");
-            choice = sc.nextInt();
-            MenuEnumForUsers menuEnumForUsers = MenuEnumForUsers.getEnumByValue(choice);
-
-            menuEnumForUsers.getStrategy().execute();
-            System.out.println();
-
+                menuEnumForUsers.getStrategy().execute();
+                System.out.println();
+            }
 
         } else {
             System.out.println("Enter your password: ");
             String password = sc.next();
-            Admin admin = new Admin() {
-            };
+            Admin admin = new Admin() {};
             if (password.equals(admin.getPassword())) {
-                AdminMenuUtil.showAdminMenu();
-                System.out.print("Select one: ");
-                choice = sc.nextInt();
-                MenuEnumForAdmin menuEnumForAdmin = MenuEnumForAdmin.getEnumByValue(choice);
-                menuEnumForAdmin.getStrategy().execute();
-                System.out.println();
+                while (true){
+                    AdminMenuUtil.showAdminMenu();
+                    System.out.print("Select one: ");
+                    choice = sc.nextInt();
+                    MenuEnumForAdmin menuEnumForAdmin = MenuEnumForAdmin.getEnumByValue(choice);
+                    menuEnumForAdmin.getStrategy().execute();
+                    System.out.println();
+                }
+
             }else {
                 throw new RuntimeException("Password is incorrect!");
             }
 
         }
-
+//            yeni password error verir
 
     }
 }
