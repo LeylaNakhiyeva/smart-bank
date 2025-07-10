@@ -1,6 +1,10 @@
 package org.example.strategy.userStrategy;
 
+import org.example.constant.exceptions.InvalidCredentialsException;
+import org.example.constant.exceptions.UserBlockedException;
+import org.example.constant.messages.ExceptionMessages;
 import org.example.enums.StatusEnum;
+import org.example.model.Bank;
 import org.example.model.User;
 import org.example.strategy.MenuStrategy;
 
@@ -15,14 +19,17 @@ public class LoginStrategy implements MenuStrategy {
         String email = sc.next();
         System.out.println("Please enter the password: ");
         String password = sc.next();
-        User user = new User();
-        if (email.equals(user.getEmail()) && password.equals(user.getPassword()) && user.getStatus().equals(StatusEnum.ACTIVE)){
-            System.out.println("Login is successful!");
+        Bank.users.stream().forEach(user -> {
+            if (email.equals(user.getEmail()) && password.equals(user.getPassword()) && user.getStatus().equals(StatusEnum.ACTIVE)){
+                System.out.println("Login is successful!");
+            }
+        else if (password!=user.getPassword()){
+            throw new InvalidCredentialsException(ExceptionMessages.INVALID_CREDENTIALS_EXCEPTION);
         }
-        else if (!password.equals(user.getPassword())){
-            System.out.println("InvalidCredentialsException");
-        } else if (user.getStatus().equals(StatusEnum.INACTIVE)) {
-            System.out.println("UserBlockedException");
-        }
+            else if (user.getStatus().equals(StatusEnum.INACTIVE)) {
+                throw new UserBlockedException(ExceptionMessages.USER_BLOCKED_EXCEPTION);
+            }
+        });
+
     }
 }

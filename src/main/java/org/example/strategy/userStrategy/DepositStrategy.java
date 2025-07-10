@@ -16,16 +16,20 @@ public class DepositStrategy implements MenuStrategy {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the card number: ");
         String cardNumber = sc.next();
-        Card card = new Card();
+        Optional<Card> card = Bank.users.stream()
+                .flatMap(user -> user.getCards().stream()) // bütün istifadəçilərin kartlarını götür
+                .filter(c -> c.getCardNumber().equals(cardNumber)) // uyğun kartı tap
+                .findFirst();
 
-        Bank.users.stream()
-                .filter(user -> card.getCardNumber().equals(card))
-                .forEach(user -> {
-                    System.out.println("Write amount: ");
-                    BigDecimal amount = new BigDecimal(sc.nextInt());
-                    card.setBalance(card.getBalance().add(amount));
-                    System.out.println("Succesfull");
-                });
 
+        if (card.isPresent()){
+            System.out.println("Write amount: ");
+            BigDecimal amount = new BigDecimal(sc.nextInt());
+            card.get().setBalance(card.get().getBalance().add(amount));
+            System.out.println("Succesfull");
+        }
+        else {
+            System.out.println("Card not found.");
+        }
     }
 }

@@ -17,31 +17,40 @@ public class ResetPasswordStrategy implements MenuStrategy {
         System.out.println("Enter your password: ");
         String password = sc.next();
 
-        if (password.isBlank()) {
-            System.out.println("Password cannot be empty!");
-            return;
-        }
+        Bank.users.stream().filter(user -> password.equals(user.getPassword()))
+                .forEach(user -> {
+                    System.out.println("Enter your new password: ");
+                    String newPassword = sc.next();
 
-        Optional<User> user1 = Bank.users.stream()
-                .filter(user -> password.equals(user.getPassword()))
-                .findFirst();
+                    user.setPassword(newPassword);
+                    System.out.println("Password successfully updated!");
+                });
 
-        if (user1.isPresent()) {
-            System.out.println("Enter your new password: ");
-            String newPassword = sc.next();
-
-            if (newPassword.isBlank()) {
-                System.out.println("New password cannot be empty!");
-                return;
-            }
-
-            user1.get().setPassword(newPassword);
-            System.out.println("Password successfully updated!");
-        } else {
-            System.out.println("Incorrect password!");
-        }
-
-         sc.close(); // Əgər başqa yerdə input lazım deyilsə, saxla
+//        if (password.isBlank()) {
+//            System.out.println("Password cannot be empty!");
+//            return;
+//        }
+//
+//        Optional<User> user1 = Bank.users.stream()
+//                .filter(user -> password.equals(user.getPassword()))
+//                .findFirst();
+//
+//        if (user1.isPresent()) {
+//            System.out.println("Enter your new password: ");
+//            String newPassword = sc.next();
+//
+//            if (newPassword.isBlank()) {
+//                System.out.println("New password cannot be empty!");
+//                return;
+//            }
+//
+//            user1.get().setPassword(newPassword);
+//            System.out.println("Password successfully updated!");
+//        } else {
+//            System.out.println("Incorrect password!");
+//        }
+//
+//         sc.close(); // Əgər başqa yerdə input lazım deyilsə, saxla
     }
 }
 

@@ -1,5 +1,8 @@
 package org.example.strategy.userStrategy;
 
+import org.example.constant.exceptions.InsufficientBalanceException;
+import org.example.constant.messages.ExceptionMessages;
+import org.example.model.Bank;
 import org.example.model.Card;
 import org.example.strategy.MenuStrategy;
 
@@ -9,7 +12,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class TransferMoneyStrategy implements MenuStrategy {
-    private List<Card> cards = new ArrayList<>();
     @Override
     public void execute() {
         Scanner sc = new Scanner(System.in);
@@ -20,7 +22,7 @@ public class TransferMoneyStrategy implements MenuStrategy {
         String toCardNumber = sc.next();
 
         System.out.println("Write amount: ");
-        BigDecimal amount = new BigDecimal(sc.nextInt());
+        BigDecimal amount = new BigDecimal(sc.next());
 
 
         Card yourCard = findCardByNumber(yourCardNumber);
@@ -32,19 +34,24 @@ public class TransferMoneyStrategy implements MenuStrategy {
                 toCard.setBalance(toCard.getBalance().add(amount));
                 System.out.println("Transfer completed.");
             } else {
-                System.out.println("Insufficient balance.");
+                throw new InsufficientBalanceException(ExceptionMessages.INSUFFICIENT_BALANCE_EXCEPTION);
             }
-        } else {
-            System.out.println("One or both cards not found.");
+        } if (yourCard == null) {
+            System.out.println("Your card not found.");
+            return;
         }
+        if (toCard == null) {
+            System.out.println("Receiver card not found.");
+            return;
+        }
+
     }
 
     private Card findCardByNumber(String cardNumber) {
-        for (Card card : cards) {
-            if (card.getCardNumber().equals(cardNumber)) {
-                return card;
-            }
-        }
-        return null;
+        return Bank.users.stream()
+                .flatMap(user -> user.getCards().stream())
+                .filter(card -> card.getCardNumber().equals(cardNumber))
+                .findFirst()
+                .orElse(null);
     }
 }

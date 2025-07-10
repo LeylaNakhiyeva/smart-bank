@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.example.enums.StatusEnum;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -22,6 +23,8 @@ public class User {
         this.email = email;
         this.password = password;
         this.status = status;
+        this.cards = new ArrayList<>();
+
     }
     public User(){
 

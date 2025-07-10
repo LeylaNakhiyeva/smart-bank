@@ -1,12 +1,12 @@
 package org.example.strategy.userStrategy;
 
+import org.example.constant.exceptions.UserAlreadyExistsException;
+import org.example.constant.messages.ExceptionMessages;
 import org.example.enums.StatusEnum;
 import org.example.model.Bank;
 import org.example.model.User;
 import org.example.strategy.MenuStrategy;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class RegistrationStrategy implements MenuStrategy {
@@ -25,6 +25,12 @@ public class RegistrationStrategy implements MenuStrategy {
         String password = sc.next();
         StatusEnum status = StatusEnum.ACTIVE;
 
+        boolean exists = Bank.users.stream()
+                .anyMatch(u -> u.getEmail().equalsIgnoreCase(email));
+
+        if (exists) {
+            throw new UserAlreadyExistsException(ExceptionMessages.USER_ALREADY_EXISTS);
+        }
         User user = new User(name, surname, email, password, status);
 
         Bank.users.add(user);

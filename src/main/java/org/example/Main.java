@@ -12,45 +12,6 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-
-        MenuUtil.showFirstMenu();
-        System.out.println("Select one: ");
-        int option = sc.nextInt();
-        AdminUserMenuEnum menu = AdminUserMenuEnum.getEnumByValue(option);
-        int choice;
-
-        if (menu.equals(AdminUserMenuEnum.USER)) {
-            while (true){
-                UsersMenuUtil.showMenuForUsers();
-                System.out.print("Select one: ");
-                choice = sc.nextInt();
-                MenuEnumForUsers menuEnumForUsers = MenuEnumForUsers.getEnumByValue(choice);
-
-                menuEnumForUsers.getStrategy().execute();
-                System.out.println();
-            }
-
-        } else {
-            System.out.println("Enter your password: ");
-            String password = sc.next();
-            Admin admin = new Admin() {};
-            if (password.equals(admin.getPassword())) {
-                while (true){
-                    AdminMenuUtil.showAdminMenu();
-                    System.out.print("Select one: ");
-                    choice = sc.nextInt();
-                    MenuEnumForAdmin menuEnumForAdmin = MenuEnumForAdmin.getEnumByValue(choice);
-                    menuEnumForAdmin.getStrategy().execute();
-                    System.out.println();
-                }
-
-            }else {
-                throw new RuntimeException("Password is incorrect!");
-            }
-
-        }
-//            yeni password error verir
-
+        MenuUtil.baseMenu();
     }
 }

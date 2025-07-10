@@ -14,9 +14,9 @@ public enum MenuEnumForUsers {
     CREATE_ACCOUNT(4, "Create account", new CreateAccountStrategy()),
     DEPOSIT_MONEY(5, "Deposit money", new DepositStrategy()),
     WITHDRAW_MONEY(6, "Withdraw money", new WithdrawMoneyStrategy()),
-    TRANSFER_MONEY(7, "Transfer money", new TransferMoneyStrategy());
+    TRANSFER_MONEY(7, "Transfer money", new TransferMoneyStrategy()),
 //    VIEW_TRANSACTION_HISTORY,
-//    LOGOUT;
+    LOGOUT(9, "Logout", new LogoutStrategy());
 
     private final int value;
     private final String description;

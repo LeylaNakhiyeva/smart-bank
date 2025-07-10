@@ -33,16 +33,14 @@ public class CreateAccountStrategy implements MenuStrategy {
                     System.out.println("Select account type: ");
                     int select = sc.nextInt();
                     AccountTypeEnum accountType = AccountTypeEnum.getEnumByValue(select);
-                    String cardNumber = String.valueOf(Math.abs(UUID.randomUUID().getMostSignificantBits()));
-                    System.out.println(cardNumber.substring(0, 16));
+                    String rawCard = String.format("%016d", Math.abs(UUID.randomUUID().getMostSignificantBits()));
+                    String cardNumber = rawCard.substring(0, 16);
 
                     System.out.println("card number: "+ cardNumber);
-                    BigDecimal balance = new BigDecimal(0);
+                    BigDecimal balance = BigDecimal.ZERO;
 
                     Card card = new Card(cardNumber, balance, accountType);
                     user.getCards().add(card);
                 });
-
-
     }
 }
